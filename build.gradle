@@ -1,0 +1,42 @@
+group 'com.padas2.bitbucket.supportzip'
+version '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.beust', name: 'jcommander', version: '1.72'
+    compile 'com.padas2.bitbucket.supportzip:bitbucket-support-generator:0.0.8-SNAPSHOT'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+}
+
+publishing {
+    publications {
+        client(MavenPublication) {
+            groupId group
+            artifactId "bitbucket-support-generator-cli"
+            version version
+            from components.java
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.padas2.bitbucket.supportzip.CLITester"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude ("META-INF/*SF","META-INF/*SF","META-INF/*SF")
+}
