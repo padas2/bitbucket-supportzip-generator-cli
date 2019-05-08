@@ -29,8 +29,6 @@ public class SupportZipCLI {
             GenerateSupportZipCommand generateSupportZipCommand = (GenerateSupportZipCommand)command;
             attachExtraCommandsIfPresent(commandLine, generateSupportZipCommand);
         }
-        else if(commandLine.hasOption("gitServerUrl") && commandLine.hasOption("credentialsFilePath"))
-            command = new GenerateSupportZipCommand(commandLine);
         else
             command = new NoOptionsPassedCommand(options);
         return command;
