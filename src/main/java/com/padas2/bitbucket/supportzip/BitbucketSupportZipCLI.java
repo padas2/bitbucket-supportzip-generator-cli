@@ -2,7 +2,7 @@ package com.padas2.bitbucket.supportzip;
 
 import org.apache.commons.cli.*;
 
-public class SupportZipCLI {
+public class BitbucketSupportZipCLI {
     private static Options getDefaultOptions() {
         Options options = new Options();
         options.addOption("gitServerUrl", true, "Bitbucket server url");
@@ -20,7 +20,7 @@ public class SupportZipCLI {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse( options, args);
 
-        SupportZipCLI cli = new SupportZipCLI();
+        BitbucketSupportZipCLI cli = new BitbucketSupportZipCLI();
         ExecutableCommand command = cli.getExecutableCommand(cmd, options);
         command.run();
     }

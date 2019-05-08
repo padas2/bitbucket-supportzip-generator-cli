@@ -13,7 +13,7 @@ public class HelpCommand implements ExecutableCommand {
 
     protected void printHelpUsing(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("SupportZipCLI", options);
+        formatter.printHelp("BitbucketSupportZipCLI", options);
     }
 
     @Override
