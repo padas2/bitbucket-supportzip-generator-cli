@@ -47,9 +47,7 @@ public class GenerateSupportZipCommand implements ExecutableCommand{
     }
 
     private void checkIfMinimumInputsArePassed() {
-        if(commandLine.hasOption("gitServerUrl") && commandLine.hasOption("adminUser") && commandLine.hasOption("adminPwd"))
-            System.out.println("Minimum Inputs to generate support zip have been provided");
-        else
+        if(!(commandLine.hasOption("gitServerUrl") && commandLine.hasOption("adminUser") && commandLine.hasOption("adminPwd")))
             throw new IncompleteInputsException("One of inputs gitServerUrl, adminUser, adminPwd is missing");
     }
 }

@@ -1,5 +1,5 @@
 group 'com.padas2.bitbucket.supportzip'
-version '0.0.1-SNAPSHOT'
+version '0.0.3-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -15,7 +15,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'com.beust', name: 'jcommander', version: '1.72'
-    compile 'com.padas2.bitbucket.supportzip:bitbucket-support-generator:0.0.8-SNAPSHOT'
+    compile 'com.padas2.bitbucket.supportzip:bitbucket-support-generator:0.1.1-SNAPSHOT'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
 
 }

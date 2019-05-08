@@ -3,11 +3,6 @@ package com.padas2.bitbucket.supportzip;
 import org.apache.commons.cli.*;
 
 public class SupportZipCLI {
-    private static void showHelp(Options options) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("SupportZipCLI", options);
-    }
-
     public static void main(String[] args) throws ParseException {
         Options options = new Options();
         options.addOption("gitServerUrl", true, "Bitbucket server url");
