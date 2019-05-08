@@ -8,7 +8,7 @@ public class BitbucketSupportZipCLI {
         options.addOption("gitServerUrl", true, "Bitbucket server url");
         options.addOption("adminUser", true, "Admin user slug");
         options.addOption("adminPwd", true, "Admin user password");
-        options.addOption("showLogsInExplorer", false, "Open Unzipped dir in File Explorer");
+        options.addOption("showLogsDirInFileExplorer", false, "Open Unzipped dir in File Explorer");
         options.addOption("flattenUnzipDir", false, "Flatten unzipped dir from hierarchial to flat structure");
         options.addOption("help", false, "Help");
         return options;
