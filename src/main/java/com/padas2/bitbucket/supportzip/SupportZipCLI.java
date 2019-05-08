@@ -3,7 +3,7 @@ package com.padas2.bitbucket.supportzip;
 import org.apache.commons.cli.*;
 
 public class SupportZipCLI {
-    public static void main(String[] args) throws ParseException {
+    private static Options getDefaultOptions() {
         Options options = new Options();
         options.addOption("gitServerUrl", true, "Bitbucket server url");
         options.addOption("adminUser", true, "Admin user slug");
@@ -11,6 +11,11 @@ public class SupportZipCLI {
         options.addOption("showLogsInExplorer", false, "Open Unzipped dir in File Explorer");
         options.addOption("flattenUnzipDir", false, "Flatten unzipped dir from hierarchial to flat structure");
         options.addOption("help", false, "Help");
+        return options;
+    }
+
+    public static void main(String[] args) throws ParseException {
+        Options options = getDefaultOptions();
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse( options, args);
