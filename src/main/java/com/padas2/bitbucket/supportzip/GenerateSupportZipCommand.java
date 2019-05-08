@@ -2,14 +2,18 @@ package com.padas2.bitbucket.supportzip;
 
 import com.padas2.bitbucket.supportzip.api.BitbucketServerDetails;
 import org.apache.commons.cli.CommandLine;
+import java.awt.Desktop;
+
+class IncompleteInputsException extends RuntimeException {
+    public IncompleteInputsException(String s) {
+        super(s);
+    }
+}
 
 public class GenerateSupportZipCommand implements ExecutableCommand{
     private CommandLine commandLine;
     private boolean resultsToBeDisplayedInFileExplorer;
-    private boolean resultsToBeDisplayedInChrome;
     private boolean flattenResultDir;
-    private boolean getCredentialsFromCommandLine;
-    private boolean getCredentialsFromCredentialsFile;
 
     public GenerateSupportZipCommand(CommandLine commandLine) {
         this.commandLine = commandLine;
@@ -17,6 +21,7 @@ public class GenerateSupportZipCommand implements ExecutableCommand{
     
     @Override
     public void run() {
+        checkIfMinimumInputsArePassed();
         BitbucketServerDetails b = new BitbucketServerDetails();
         b.setGitHostUrl(commandLine.getOptionValue("gitServerUrl"));
         b.setGitUser(commandLine.getOptionValue("adminUser"));
@@ -24,9 +29,10 @@ public class GenerateSupportZipCommand implements ExecutableCommand{
         BitbucketSupportZipEngine bitbucketSupportZipEngine = new BitbucketSupportZipEngine(b);
         if(flattenResultDir)
             bitbucketSupportZipEngine.flattenUnzippedDir();
-
         try {
             bitbucketSupportZipEngine.start();
+            if(resultsToBeDisplayedInFileExplorer)
+                Desktop.getDesktop().open(bitbucketSupportZipEngine.getFinalResultDir());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,19 +42,14 @@ public class GenerateSupportZipCommand implements ExecutableCommand{
         this.resultsToBeDisplayedInFileExplorer = resultsToBeDisplayedInFileExplorer;
     }
 
-    public void setResultsToBeDisplayedInChrome(boolean resultsToBeDisplayedInChrome) {
-        this.resultsToBeDisplayedInChrome = resultsToBeDisplayedInChrome;
-    }
-
     public void setFlattenResultDir(boolean flattenResultDir) {
         this.flattenResultDir = flattenResultDir;
     }
 
-    public void getCredentialsFromCommandLine(boolean getCredentialsFromCommandLine) {
-        this.getCredentialsFromCommandLine = getCredentialsFromCommandLine;
-    }
-
-    public void getCredentialsFromCredentialsFile(boolean getCredentialsFromCredentialsFile) {
-        this.getCredentialsFromCredentialsFile = getCredentialsFromCredentialsFile;
+    private void checkIfMinimumInputsArePassed() {
+        if(commandLine.hasOption("gitServerUrl") && commandLine.hasOption("adminUser") && commandLine.hasOption("adminPwd"))
+            System.out.println("Minimum Inputs to generate support zip have been provided");
+        else
+            throw new IncompleteInputsException("One of inputs gitServerUrl, adminUser, adminPwd is missing");
     }
 }

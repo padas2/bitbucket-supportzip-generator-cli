@@ -10,7 +10,7 @@ public class NoOptionsPassedCommand extends HelpCommand{
 
     @Override
     public void run() {
-        System.out.println("As no options have been passed, simply printing help");
+        System.out.println("Printing help and usage as no meaningful options have been passed");
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("SupportZipCLI", options);
     }
