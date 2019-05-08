@@ -42,7 +42,7 @@ public class BitbucketSupportZipCLI {
     private void attachExtraCommandsIfPresent(CommandLine cmd, GenerateSupportZipCommand generateSupportZipCommand) {
         if(cmd.hasOption("flattenUnzipDir"))
             generateSupportZipCommand.setFlattenResultDir(true);
-        if(cmd.hasOption("showLogsInExplorer"))
+        if(cmd.hasOption("showLogsDirInFileExplorer"))
             generateSupportZipCommand.setResultsToBeDisplayedInFileExplorer(true);
     }
 }
