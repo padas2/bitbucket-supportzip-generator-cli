@@ -11,5 +11,6 @@ public class NoOptionsPassedCommand extends HelpCommand{
     public void run() {
         System.out.println("Printing usage as no meaningful options have been passed");
         printHelpUsing(options);
+        printSampleUsage();
     }
 }

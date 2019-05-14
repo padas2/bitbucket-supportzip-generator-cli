@@ -3,6 +3,8 @@ package com.padas2.bitbucket.supportzip;
 import com.padas2.bitbucket.supportzip.api.BitbucketServerDetails;
 import org.apache.commons.cli.CommandLine;
 import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 class IncompleteInputsException extends RuntimeException {
     public IncompleteInputsException(String s) {
@@ -22,20 +24,38 @@ public class GenerateSupportZipCommand implements ExecutableCommand{
     @Override
     public void run() {
         checkIfMinimumInputsArePassed();
-        BitbucketServerDetails b = new BitbucketServerDetails();
-        b.setGitHostUrl(commandLine.getOptionValue("gitServerUrl"));
-        b.setGitUser(commandLine.getOptionValue("adminUser"));
-        b.setGitPassWord(commandLine.getOptionValue("adminPwd"));
-        BitbucketSupportZipEngine bitbucketSupportZipEngine = new BitbucketSupportZipEngine(b);
-        if(flattenResultDir)
-            bitbucketSupportZipEngine.flattenUnzippedDir();
+        BitbucketSupportZipEngine bitbucketSupportZipEngine = getConfiguredBitbucketSupportEngine();
         try {
             bitbucketSupportZipEngine.start();
-            if(resultsToBeDisplayedInFileExplorer)
-                Desktop.getDesktop().open(bitbucketSupportZipEngine.getFinalResultDir());
+            openResultDirInFileExplorerIfSpecified(bitbucketSupportZipEngine.getFinalResultDir());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void openResultDirInFileExplorerIfSpecified(File finalResultDir) {
+        try {
+            if(resultsToBeDisplayedInFileExplorer)
+                Desktop.getDesktop().open(finalResultDir);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+    }
+
+    private BitbucketSupportZipEngine getConfiguredBitbucketSupportEngine() {
+        BitbucketServerDetails serverDetails = getBitbucketServerDetailsFromCmdLine();
+        BitbucketSupportZipEngine bitbucketSupportZipEngine = new BitbucketSupportZipEngine(serverDetails);
+        if(flattenResultDir)
+            bitbucketSupportZipEngine.flattenUnzippedDir();
+        return bitbucketSupportZipEngine;
+    }
+
+    private BitbucketServerDetails getBitbucketServerDetailsFromCmdLine() {
+        BitbucketServerDetails serverDetails = new BitbucketServerDetails();
+        serverDetails.setGitHostUrl(commandLine.getOptionValue("gitServerUrl"));
+        serverDetails.setGitUser(commandLine.getOptionValue("adminUser"));
+        serverDetails.setGitPassWord(commandLine.getOptionValue("adminPwd"));
+        return serverDetails;
     }
 
     public void setResultsToBeDisplayedInFileExplorer(boolean resultsToBeDisplayedInFileExplorer) {
