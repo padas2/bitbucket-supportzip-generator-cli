@@ -3,7 +3,7 @@ A Java based Command Line Interface built using Apache Commons CLI, to download 
 
 ## Pre-requisites
 * Works only on Bitbucket Server. Support for Bitbucket Data Center is yet to be added.
-* Bitbucket Server version has to be atleast 5.13.0
+* Bitbucket Server should be versioned at a minimum of 5.13.0.
 * Latest version of **Atlassian Troubleshooting and Support Tools** plugin has to be installed (Not optional).
 
 ## Internal Makeup
